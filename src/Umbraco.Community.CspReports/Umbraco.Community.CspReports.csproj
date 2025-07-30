@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<IsPackable>true</IsPackable>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<StaticWebAssetBasePath>App_Plugins/CspReports</StaticWebAssetBasePath>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Product>Umbraco.Community.CspReports</Product>
+		<PackageId>Umbraco.Community.CspReports</PackageId>
+		<Title>Umbraco.Community.CspReports</Title>
+		<Version>1.0.0-alpha</Version>
+		<Description>An Umbraco plugin to store, display, and filter reports received from Content-Security-Policy headers</Description>
+		<PackageTags>umbraco plugin package umbraco-marketplace Content-Security-Policy content security policy csp report violation</PackageTags>
+		<RootNamespace>Umbraco.Community.CspReports</RootNamespace>
+		<Authors>Rachel Drake</Authors>
+		<PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/profcinders/Umbraco.Community.CspReports</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/profcinders/Umbraco.Community.CspReports</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[13.9.3,14)" />
+		<PackageReference Include="Umbraco.Community.CspManager" Version="[1.4.2,2)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+</Project>

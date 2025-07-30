@@ -1,0 +1,157 @@
+﻿<style>
+    .csp-report-container {
+        display: block;
+        border: var(--uui-box-border-width, 0) solid var(--uui-box-border-color), var(--uui-color-divider-standalone);
+        box-shadow: var(--uui-box-box-shadow, var(--uui-shadow-depth-1));
+        border-radius: var(--uui-box-border-radius, var(--uui-border-radius));
+        background-color: var(--uui-color-surface);
+    }
+
+    .csp-report-expander {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        column-gap: var(--uui-size-space-5);
+        border: 0;
+        border-bottom: 1px solid var(--uui-color-divider-standalone);
+        border-radius: var(--uui-box-border-radius, var(--uui-border-radius));
+        padding: var(--uui-box-header-padding, var(--uui-size-space-4) var(--uui-size-space-5));
+    }
+
+        .csp-report-expander .csp-report-expander-controls {
+            display: block;
+            margin-left: auto;
+        }
+
+    .csp-report {
+        display: none;
+    }
+
+        .csp-report.show {
+            display: block;
+        }
+
+    .csp-report-table {
+        table-layout: fixed;
+    }
+
+        .csp-report-table uui-table-row uui-table-cell:first-of-type {
+            width: 150px;
+        }
+
+        .csp-report-table uui-table-row uui-table-cell:not(:first-of-type) {
+            overflow-wrap: break-word;
+        }
+
+            .csp-report-table uui-table-row uui-table-cell:not(:first-of-type) span {
+                cursor: text;
+            }
+
+    .csp-report-footer-controls {
+        display: flex;
+        gap: 10px;
+    }
+</style>
+
+<div ng-controller="Umbraco.Community.CspReports.List.Controller as vm">
+    <umb-editor-view>
+        <umb-editor-header name="vm.page.name"
+                           name-locked="true"
+                           hide-icon="true"
+                           hide-description="true"
+                           hide-alias="true">
+        </umb-editor-header>
+
+        <umb-editor-container ng-class="{'flex flex-column justify-center': vm.page.loading || vm.reports.length == 0}">
+            <div ng-if="vm.page.loading" class="flex justify-center items-center">
+                <uui-loader></uui-loader>
+            </div>
+
+            <div ng-if="!vm.page.loading && vm.reports.length <= 0" class="flex justify-center items-center text-center">
+                <uui-box>
+                    <p>No reports found</p>
+                    <uui-button label="Reload" look="primary" color="default" type="button" ng-click="vm.getItems()"></uui-button>
+                </uui-box>
+            </div>
+
+            <div ng-if="!vm.page.loading && vm.reports.length > 0" class="flex flex-column flx-gap-sm">
+                <div class="csp-report-container" ng-repeat="(reportIndex, report) in vm.reports">
+                    <button type="button" class="csp-report-expander uui-text" ng-click="vm.accordions.toggle($event, reportIndex)">
+                        <h5 class="uui-h5">{{::vm.getUrlOrigin(report.body.blockedUrl)}}</h5>
+
+                        <span>{{::vm.parseDate(report.dateReceived + "Z")}}</span>
+                        <span>{{::report.body.effectiveDirective}}</span>
+
+                        <div class="csp-report-expander-controls">
+                            <uui-symbol-expand ng-attr-open="{{vm.accordions.expanded.includes(reportIndex) ? '' : undefined}}"></uui-symbol-expand>
+                        </div>
+                    </button>
+
+                    <div class="csp-report" ng-class="{'show': vm.accordions.expanded.includes(reportIndex)}">
+                        <uui-table class="csp-report-table">
+                            <uui-table-row>
+                                <uui-table-cell>Blocked URL</uui-table-cell>
+                                <uui-table-cell><span>{{::report.body.blockedUrl}}</span></uui-table-cell>
+                            </uui-table-row>
+                            <uui-table-row>
+                                <uui-table-cell>Effective Directive</uui-table-cell>
+                                <uui-table-cell><span>{{::report.body.effectiveDirective}}</span></uui-table-cell>
+                            </uui-table-row>
+                            <uui-table-row>
+                                <uui-table-cell>Date Received</uui-table-cell>
+                                <uui-table-cell><span>{{::vm.parseDate(report.dateReceived + "Z")}}</span></uui-table-cell>
+                            </uui-table-row>
+                            <uui-table-row>
+                                <uui-table-cell>Source File</uui-table-cell>
+                                <uui-table-cell><span>{{::report.body.sourceFile}}</span></uui-table-cell>
+                            </uui-table-row>
+                            <uui-table-row>
+                                <uui-table-cell>Line Number</uui-table-cell>
+                                <uui-table-cell><span>{{::report.body.lineNumber}}</span></uui-table-cell>
+                            </uui-table-row>
+                            <uui-table-row>
+                                <uui-table-cell>Column Number</uui-table-cell>
+                                <uui-table-cell><span>{{::report.body.columnNumber}}</span></uui-table-cell>
+                            </uui-table-row>
+                            <uui-table-row>
+                                <uui-table-cell>Document URL</uui-table-cell>
+                                <uui-table-cell><span>{{::report.body.documentUrl}}</span></uui-table-cell>
+                            </uui-table-row>
+                            <uui-table-row>
+                                <uui-table-cell>Referrer</uui-table-cell>
+                                <uui-table-cell><span>{{::report.body.referrer}}</span></uui-table-cell>
+                            </uui-table-row>
+                            <uui-table-row>
+                                <uui-table-cell>Applied Policy</uui-table-cell>
+                                <uui-table-cell><span>{{::report.body.originalPolicy}}</span></uui-table-cell>
+                            </uui-table-row>
+                            <uui-table-row>
+                                <uui-table-cell>Sample</uui-table-cell>
+                                <uui-table-cell><span>{{::report.body.sample}}</span></uui-table-cell>
+                            </uui-table-row>
+                            <uui-table-row>
+                                <uui-table-cell>Disposition</uui-table-cell>
+                                <uui-table-cell><span>{{::report.body.disposition}}</span></uui-table-cell>
+                            </uui-table-row>
+                            <uui-table-row>
+                                <uui-table-cell>Status Code</uui-table-cell>
+                                <uui-table-cell><span>{{::report.body.statusCode}}</span></uui-table-cell>
+                            </uui-table-row>
+                        </uui-table>
+                    </div>
+                </div>
+
+                <div ng-if="vm.pagination.totalPages > 1">
+                    <uui-pagination total="{{vm.pagination.totalPages}}" current="{{vm.pagination.currentPage}}" ng-on-change="vm.pagination.changePage($event)"></uui-pagination>
+                </div>
+            </div>
+        </umb-editor-container>
+
+        <umb-editor-footer>
+            <umb-editor-footer-content-right class="csp-report-footer-controls">
+                <uui-button label="Refresh page" look="primary" color="default" type="button" ng-click="vm.getItems()"></uui-button>
+                <uui-button label="Delete all" look="primary" color="danger" type="button" state="{{vm.state.deletingAll}}" ng-click="vm.confirmDeleteAll()"></uui-button>
+            </umb-editor-footer-content-right>
+        </umb-editor-footer>
+    </umb-editor-view>
+</div>

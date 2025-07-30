@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>true</IsPackable>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Product>Umbraco.Community.CspReports.Examine</Product>
+		<PackageId>Umbraco.Community.CspReports.Examine</PackageId>
+		<Title>Umbraco.Community.CspReports.Examine</Title>
+		<Version>1.0.0-alpha</Version>
+		<Description>An Umbraco plugin to store reports received from Content-Security-Policy headers via Examine</Description>
+		<PackageTags>umbraco plugin package umbraco-marketplace Content-Security-Policy content security policy csp report violation examine</PackageTags>
+		<RootNamespace>Umbraco.Community.CspReports.Examine</RootNamespace>
+		<Authors>Rachel Drake</Authors>
+		<PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/profcinders/Umbraco.Community.CspReports</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/profcinders/Umbraco.Community.CspReports</PackageProjectUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Umbraco.Community.CspReports\Umbraco.Community.CspReports.csproj" />
+	</ItemGroup>
+
+</Project>
