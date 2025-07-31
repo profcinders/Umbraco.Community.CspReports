@@ -15,9 +15,9 @@ After installation, visit the CSP Manager section in the Umbraco back office. If
 In the settings for both the Back Office and Front end CSPs, set "Toggle reporting" to `report-to` and "Report value" to `csp-endpoint`.
 
 > [!IMPORTANT]
-> This plugin currently only supports the `report-to` option. Not all browsers may support this option yet, so bear in mind the [compatibility](https://caniuse.com/mdn-http_headers_content-security-policy_report-to).
+> This plugin currently only supports the `report-to` option. Not all browsers may support this option yet, so please check its [compatibility](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/report-to#browser_compatibility).
 
-## View Reports
+## Usage
 
 To view a list of all reports, go to the CSP Manager section in Umbraco back office. From here, visit the "CSP Reports" option in the tree. You should see a paged list of all reported violations of your set policies, along with options to **Refresh** the list and **Delete all** records.
 
